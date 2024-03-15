@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes Creation</title>
+    <link rel="stylesheet" href="a.css">
+</head>
+<body>
+    <div class="nav">
+        <button class="notes" onclick="showNotes()">List of Notes</button>
+        <span class="profile-emoji">👤</span>
+    </div>
+    <div class="container">
+        <div class="glow-border">
+            <h1><span class="emoji">✏️</span>Add a Note</h1>
+            <form id="addNoteForm">
+                <label for="note">Note:</label><br>
+                <input type="text" id="note" name="note"><br>
+                <label for="text">Text:</label><br>
+                <textarea id="text" name="text"></textarea><br>
+                <button type="submit" onclick="addNote()">Add Note</button>
+            </form>
+        </div>
+    
+        <div class="glow-border">
+            <h1><span class="emoji">❌</span>Remove a Note</h1>
+            <form id="removeNoteForm">
+                <label for="noteToRemove">Note ID:</label><br>
+                <input type="text" id="noteToRemove" name="note"><br>
+                <button type="submit">Remove Note</button>
+            </form>
+        </div>
+        <div class="glow-border">
+            <h1><span class="emoji">🔍</span>View Notes</h1>
+            <form id="viewNoteForm">
+                <label for="noteToView">Note:</label><br>
+                <input type="text" id="noteToView" name="note"><br>
+                <button type="submit" onclick="removeNote()">View Notes</button>
+            </form>
+        </div>
+        <div id="noteContainer"></div> 
+    </div>
+    <script>
+        document.getElementById('addNoteForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const note = document.getElementById('note').value;
+            const text = document.getElementById('text').value;
+            const response = await fetch('/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ note, text })
+            });
+            const data = await response.json();
+            alert("New note added successfully!");
+            console.log(data);
+        });
+        document.getElementById('removeNoteForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const note = document.getElementById('noteToRemove').value;
+            const response = await fetch('/remove', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ note })
+            });
+            alert("Note removed successfully!");
+        });
+        document.getElementById('viewNoteForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const note = document.getElementById('noteToView').value;
+            const response = await fetch('/view', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ note })
+            });
+            const data = await response.json();
+            const container = document.getElementById('noteContainer');
+            container.innerHTML = '';
+            data.forEach(note => {
+                const p = document.createElement('p');
+                p.textContent = `Note: ${note.note1}, Text: ${note.text1}`;
+                container.appendChild(p);
+            });
+      });
+      const notes = []; 
+      function addNote() {
+        const note = document.getElementById('note').value;
+        const text = document.getElementById('text').value;
+        notes.push({ note, text }); 
+        alert("New note added successfully!");
+    }
+    function viewNotes() {
+        const container = document.getElementById('noteContainer');
+        container.innerHTML = ''; 
+        notes.forEach(noteObj => {
+            const p = document.createElement('p');
+            p.textContent = `Note: ${noteObj.note}`;
+            container.appendChild(p);
+        });
+    }
+    function showNotes() {
+        viewNotes();
+    }
+    </script>
+</body>
+</html>

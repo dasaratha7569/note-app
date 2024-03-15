@@ -1,0 +1,76 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color: whitesmoke;
+}
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+}
+.glow-border {
+    border: 2px solid transparent;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: border-color 0.3s ease-in-out;
+}
+.glow-border:hover {
+    border-color: #3498db;
+    box-shadow: 0 0 10px #3498db;
+}
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #1b1a1a;
+}
+.emoji {
+    font-size: 28px;
+    margin-right: 10px;
+}
+
+label {
+    font-weight: bold;
+    color: #555;
+}
+input[type="text"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+button {
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+.nav{
+    display: flex;
+    flex-wrap:wrap-reverse;
+    justify-content: right;
+    margin-top: 5%;
+    margin-right: 10%;
+}
+button:hover {
+    background-color: #3fb929;
+}
+.profile-emoji {
+    display: flex;
+    justify-content: right;
+    top: 30px;
+    right: 300px;
+    font-size: 40px;
+}
+.notes{
+    margin-right: 75%;
+}
